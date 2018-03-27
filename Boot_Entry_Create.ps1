@@ -1,7 +1,5 @@
 ﻿### The script is for retrieving the boot entry GUID and establishing multiple boot entry ###
 
-
-
 ## Pre-define variables
 # The top directory of Powershell script and VHD file
 $Directory_BootScript = "D:\boot_script"
@@ -31,7 +29,6 @@ $CurrentTime = Get-Date -UFormat "%Y%m%d-%H%M%S"
 
 # The sequential number is for counting the boot entries number
 $SequentialNumber = 1
-
 
 
 ## Main code
@@ -99,15 +96,6 @@ $JSONContent | ForEach-Object {
         $GUID_Result = '{0:X8}' -f $GUID_Current
         [string]$GUID_New = "$GUID_Result-$GUID_2st"
 
-        <#
-        $Target_User = Get-Content $List_File | select -Index $i
-
-        if (!$Target_User)
-        {
-            Write-Host "! The target user is less than the entry." | tee $Target_File
-            break
-        }
-        #>
         Write-Host "`nCreate new boot entry..."
         Write-Host "Copy current boot entry to $NewBootEntry"
         cmd /c "bcdedit /copy {current} /d $NewBootEntry"# | Out-File $Target_File -Append
