@@ -4,6 +4,7 @@ $CurrentBootEntryDescription = bcdedit /enum |
     Select-String -Pattern "identifier.*current" -Context 0,3 |
     ForEach-Object { $_.Context.PostContext[2] -replace '^description +' }
 $NewUser = $CurrentBootEntryDescription
-$Password = ConvertTo-SecureString $NewUser -AsPlainText -Force
+$Password_PlainText = "$CurrentBootEntryDescription".ToLower()
+$Password = ConvertTo-SecureString $Password_PlainText -AsPlainText -Force
 New-LocalUser -Name $NewUser -Description $NewUser -AccountNeverExpires -Password $Password -PasswordNeverExpires
 Add-LocalGroupMember -Group administrators -Member $CurrentBootEntryDescription
